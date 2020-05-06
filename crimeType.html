@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CRIME IN HYATTSVILLE, MD</title>
+    <link href="https://fonts.googleapis.com/css?family=Averia+Sans+Libre:400,700i&display=swap" rel="stylesheet">
+    <link href="style.css" type= "text/css" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <!-- The contents of this lab are from the Mozilla Developer's Network -->
+      <header>
+        <h1>CRIME IN HYATTSVILLE, MD</h1>
+        <img src="hyatMD.jpg" alt="a simple dove logo">
+        
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="crimes.html">CRIMES</a></li>
+            <li><a href="types.html">CRIME TYPES</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+          </ul>
+        </nav>
+      </header>
+    
+
+      <main>
+        <section>
+          <h2>Crime Types</h2>
+          <table class="sortable searchable", id="searchable">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Incident Type</th>
+                <th>Reporting Area</th>
+                <th>Street Address</th>
+            </tr>
+            </thead>
+            
+          </table>
+        </section>
+      </main>
+
+      <footer>
+        <p>This website has been written by..., 2020.</p>
+
+      </footer>
+      <script>
+          
+        let crimeType = window.location.href.split('?type=')[1];
+        if (crimeType.includes('%20')){
+            crimeType = crimeType.replace(/%20/g, ' ');
+        }
+        console.log(crimeType);
+
+        fetch('https://data.princegeorgescountymd.gov/resource/wb4e-w4nf.json?$limit=100000&$$app_token=zXkKoYL09JMeHS0iVhnXpcs78') // replace this with the food safety data set
+          .then((data) => data.json()) // this is an "implicit return" - we're returning the results of the Fetch request to the next step.
+          .then((data) => { // this is an explicit return. If I want my information to go further, I'll need to use the "return" keyword before the brackets close
+            
+            const clearEmptyData = data.filter((f)=>f.incident_case_id);
+            const refined = clearEmptyData.map((m)=>({
+              //elements I want for the chart
+              sector: m.pgpd_sector,
+              date: m.date,
+              inc_type:m.clearance_code_inc_type,
+              area: m.pgpd_reporting_area,
+              address: m.street_address
+            }));
+            return refined;
+      
+          })
+          .then((data)=>{
+            const sectorB2020 = [];
+            //foreach to reformat into array 
+            data.forEach(element => {
+              if(element.sector == 'B' & element.date.substring(0,4)=="2020"){
+                sectorB2020.push(element);
+              };
+            });
+            console.log(sectorB2020);
+            return sectorB2020;
+          })
+          .then((data)=>{
+          return data.reduce((result, current)=>{
+            if(!result[current.inc_type]){
+              result[current.inc_type]=[];
+            }
+            result[current.inc_type].push(current);
+            return result;
+          }, {});
+        })
+        .then((data)=>{
+          const new_content = document.querySelector("#searchable");
+          for (let type in data){
+            if (type == crimeType){
+                console.log(data[type]);
+                new_content.innerHTML += '<tbody>';
+                data[type].forEach(el => {
+                    new_content.innerHTML += '<tr><td>'+el.date.substring(0,10)+'</td><td>'+el.inc_type+'</td><td>'+el.area+'</td><td>'+el.address+'</td></tr>';
+                })
+                new_content.innerHTML += '</tbody>';
+            }
+          }
+        });
+
+        
+      </script>
+      
+  </body>
+</html>

@@ -1,0 +1,183 @@
+/* || General setup */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 10px;
+  background-color: #FFC457;
+}
+
+body {
+  height:100%;
+  width: 100%;
+  min-width: 800px;
+  margin: 0 auto;
+}
+
+
+body {
+  width: 70%;
+  min-width: 800px;
+  margin: 0 auto;
+}
+
+/* || typography */
+
+h1, h2, h3 {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #2a2a2a;
+}
+
+p, input{
+  font-family: 'Roboto Condensed', sans-serif;
+  color: #2a2a2a;
+}
+
+h1 {
+  color: ghostwhite;
+  font-size: 3.5rem;
+  text-align: left;
+  text-shadow: 2px 2px 10px black;
+  margin-left: 25px;
+}
+
+h2 {
+  font-size: 3rem;
+  text-align: center;
+}
+
+h3 {
+  font-size: 2.2rem;
+}
+
+p, li {
+  font-size: 1.6rem;
+  line-height: 1.5;
+}
+
+/* || header layout */
+
+header {
+  margin-bottom: 15px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+body > * {
+  background-color: #FFC457;
+  padding: 1%;
+}
+
+nav{
+  background-color: #195DB3;
+} 
+article, aside, footer, section {
+  background-color: rgb(255, 217, 146);
+  padding: 1%;
+}
+
+h1 {
+  flex: 5;
+  text-transform: uppercase;
+}
+
+header img {
+  display: block;
+  height: 60px;
+  padding-top: 20.15px;
+}
+
+nav {
+  height: 50px;
+  flex: 100%;
+  display: flex;
+}
+
+nav ul {
+  padding: 0;
+  list-style-type: none;
+  flex: 2;
+  display: flex;
+}
+
+nav li {
+  display: inline;
+  text-align: center;
+  flex: 1;
+}
+
+nav a, nav span {
+  display: inline-block;
+  font-size: 2rem;
+  height: 3rem;
+  line-height: 1.7;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: ghostwhite;
+
+}
+
+/* || main layout */
+
+main {
+  display: flex;
+}
+
+article, section {
+  flex: 4;
+}
+
+aside {
+  flex: 1;
+  margin-left: 10px;
+  padding: 1%;
+}
+
+aside a {
+  display: block;
+  float: left;
+  width: 50%;
+}
+
+aside img {
+  max-width: 100%;
+}
+
+footer {
+  margin-top: 10px;
+}
+#searchable{
+  border-collapse: collapse;
+  border: 1px solid #dfdfdf;
+  font-size: 90%;
+  height: 500px;
+  overflow-y:scroll;
+}
+#searchable{
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+#searchable td, #searchable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#searchable tr:nth-child(even){background-color: #f2f2f2;}
+
+#searchable tr:hover {background-color: #ddd;}
+
+#searchable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+.searchable-header{
+  padding: 2px;
+}
+
