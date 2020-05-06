@@ -3,17 +3,6 @@
 import express from "express";
 import fetch from "node-fetch";
 
-// const sqlite3 = require('sqlite3').verbose(); // We're including a server-side version of SQLite, the in-memory SQL server.
-// const open = require(sqlite).open; // We're including a server-side version of SQLite, the in-memory SQL server.
-
-import sqlite3 from "sqlite3";
-import { open } from "sqlite";
-import writeUser from "./libraries/writeuser";
-
-const dbSettings = {
-  filename: "./tmp/database.db",
-  driver: sqlite3.Database,
-};
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -43,51 +32,7 @@ function processDataForFrontEnd(req, res) {
 // Syntax change - we don't want to repeat ourselves,
 // or we'll end up with spelling errors in our endpoints.
 //
-app.route("/api")
-  .get((req, res) => {
-    // use SQLite to return all records from your in-memory database
-    (async () => {
-      const db = await open(dbSettings);
-      const result = await db.all("SELECT * FROM user");
-      console.log("Expected result", result);
-      res.json(result);
-    })();
-  })
-  /*
-  .post((req, res) => {
-    console.log("/api post request", req.body);
-    if (!req.body.name) {
-      console.log(req.body);
-      res.status("418").send("something went wrong, additionally i am a teapot");
-    } else {
-      writeUser(req.body.name, dbSettings)
-      .then((result) => {
-        console.log(result);
-        res.send("your request was successful"); // simple mode
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }
-  })
-  */
-  .put((req,res) => {
-    console.log('Put Result',res)
-    if (!req.body.name || !req.body.zip) {
-      console.log(req.body);
-      res.status("418").json({"success":"Please enter both your name and zip."});
-    } else {
-      let username = [req.body.name, req.body.zip,req.body.interests]
-      writeUser(username, dbSettings)
-      .then((result) => {
-        console.log(result);
-        res.json({"success":"Nice! It Works..."}); // simple mode
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }
-  });
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`);
