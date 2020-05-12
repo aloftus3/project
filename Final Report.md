@@ -11,4 +11,9 @@ occuring frequently in what areas.
 
 Our stakeholders include the general public in the College Park Community as well as the PG County Police Department.
 
+The data for this webpage is taken from an external source, found at https://data.princegeorgescountymd.gov/Public-Safety/Crime-Incidents-February-2017-to-Present/wb4e-w4nf. The database is called "PG County Crime Incidents February 2017 to Present" and is narrowed down to include information pertaining to Sector B of PG County (Hyattsville, MD).
+
+We utilized several strategies and solutions in order to solve this problem. Immediately, when the user opens our webpage, the "Home" tab displays the 10 most recent crimes reported. Along with the "Home" tab we also included several other tabs that allow the user to search through the database. For the "Crimes" tab we used javascript functions and and the table library to allow the user to filter crimes that were reported based on an area seach or incident type search. Furthermore, we used the Window library extensively and passed identifiers through separate URL parameters in order to send separate data to each crime type category link. Lastly, to minimize confusion of the webpage and its contents, we included an "About" tab that explains the problem it is trying to solve and what information can be found. We all gave our input for what to include, and designated work based on understanding and skill for what needed to be done.
+
+Some technical decisions we had to make within our webpage is what to display on the "Home" tab and also how we were going to allow the user to filter through the dataset on our "Crimes" tab.
 
