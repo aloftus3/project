@@ -6,3 +6,4 @@ access crime information in the Hyattsville area.
 
 Run the live example: [https://inst377crimeproject.herokuapp.com/]
 
+Target Browsers: latest versions of IOS and Windows 10
