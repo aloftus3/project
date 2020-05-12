@@ -142,8 +142,11 @@ aside a {
   width: 50%;
 }
 
-aside img {
-  max-width: 100%;
+.aboutImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 
 footer {
