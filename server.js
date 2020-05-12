@@ -12,26 +12,49 @@ app.use(express.json());
 app.use(express.static("public"));
 
 function processDataForFrontEnd(req, res) {
-  const baseURL = ""; // Enter the URL for the data you would like to retrieve here
+ const baseURL = "https://data.princegeorgescountymd.gov/resource/wb4e-w4nf.json?$limit=100000&$$app_token=zXkKoYL09JMeHS0iVhnXpcs78"; // Enter the URL for the data you would like to retrieve here
 
-  // Your Fetch API call starts here
-  // Note that at no point do you "return" anything from this function -
-  // it instead handles returning data to your front end at line 34.
-  fetch(baseURL)
-    .then((r) => r.json())
-    .then((data) => {
-      console.log(data);
-      res.send({ data: data }); // here's where we return data to the front end
-    })
-    .catch((err) => {
-      console.log(err);
-      res.redirect("/error");
-    });
+ fetch(baseURL)
+  .then((data) => data.json()) 
+  .then((data) => {
+    const clearEmptyData = data.filter((f)=>f.incident_case_id);
+    const refined = clearEmptyData.map((m)=>({
+    //elements I want for the chart
+    sector: m.pgpd_sector,
+    date: m.date,
+    inc_type:m.clearance_code_inc_type,
+    area: m.pgpd_reporting_area,
+    address: m.street_address
+  }));
+  return refined;
+  })
+  .then((data)=>{
+  const sectorB2020 = [];
+  //foreach to reformat into array 
+  data.forEach(element => {
+    if(element.sector == 'B' & element.date.substring(0,4)=="2020"){
+      sectorB2020.push(element);
+    };
+  });
+  res.send({data:sectorB2020});
+  })
 }
 
-// Syntax change - we don't want to repeat ourselves,
-// or we'll end up with spelling errors in our endpoints.
-//
+
+app.route("/api")
+  .get((req,res)=>{
+    processDataForFrontEnd(req, res);
+  });
+app.route("/apiCrimes")
+  .put((req,res)=>{
+    processDataForFrontEnd(req, res);
+  });
+app.route("/apiType")
+  .post((req,res)=>{
+    processDataForFrontEnd(req, res);
+  });
+  
+
 
 
 app.listen(port, () => {

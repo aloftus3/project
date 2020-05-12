@@ -12,7 +12,7 @@
     <!-- The contents of this lab are from the Mozilla Developer's Network -->
       <header>
         <h1>CRIME IN HYATTSVILLE, MD</h1>
-        <img src="hyatMD.jpg" alt="a simple dove logo">
+        <img src="images/hyatMD.jpg" alt="a simple dove logo">
         
         <nav>
           <ul>
@@ -55,47 +55,22 @@
 
       </footer>
       <script>
-        fetch('https://data.princegeorgescountymd.gov/resource/wb4e-w4nf.json?$limit=100000&$$app_token=zXkKoYL09JMeHS0iVhnXpcs78') // replace this with the food safety data set
+        fetch("/apiCrimes", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          }
+        })
           .then((data) => data.json()) // this is an "implicit return" - we're returning the results of the Fetch request to the next step.
-          .then((data) => { // this is an explicit return. If I want my information to go further, I'll need to use the "return" keyword before the brackets close
-            console.log(data);
-            const clearEmptyData = data.filter((f)=>f.incident_case_id);
-            const refined = clearEmptyData.map((m)=>({
-              //elements I want for the chart
-              sector: m.pgpd_sector,
-              date: m.date,
-              inc_type:m.clearance_code_inc_type,
-              area: m.pgpd_reporting_area,
-              address: m.street_address
-            }));
-            console.log(refined);
-            return refined;
-      
-          })
-          .then((data)=>{
-            const sectorB2020 = [];
-            //foreach to reformat into array 
-            data.forEach(element => {
-              if(element.sector == 'B' & element.date.substring(0,4)=="2020"){
-                sectorB2020.push(element);
-              };
-            });
-            console.log(sectorB2020);
-            return sectorB2020;
-          })
-          .then((data)=>{
-            const recent = []
-            for (let i = data.length - 1; i >=0 ; i--) {
-                recent.push(data[i]);
-            };
-            
+          
+          .then((data)=>{   
+            data = data.data;       
             const new_content = document.querySelector("#searchable");
             new_content.innerHTML += '<tbody>';
-            recent.forEach(el => {
-              new_content.innerHTML += '<tr><td>'+el.date.substring(0,10)+'</td><td>'+el.inc_type+'</td><td>'+el.area+'</td><td>'+el.address+'</td></tr>';
-            })
+            for (let i = data.length - 1; i >=0 ; i--) {
+              new_content.innerHTML += '<tr><td>'+data[i].date.substring(0,10)+'</td><td>'+data[i].inc_type+'</td><td>'+data[i].area+'</td><td>'+data[i].address+'</td></tr>';
+            };
             new_content.innerHTML += '</tbody>';
-            console.log(recent.length)
           });
         // searchable function
         function myFunction() {

@@ -12,7 +12,7 @@
     <!-- The contents of this lab are from the Mozilla Developer's Network -->
       <header>
         <h1>CRIME IN HYATTSVILLE, MD</h1>
-        <img src="hyatMD.jpg" alt="a simple dove logo">
+        <img src="images/hyatMD.jpg" alt="a simple dove logo">
         
         <nav>
           <ul>
@@ -38,41 +38,33 @@
 
       </footer>
       <script>
-        fetch('https://data.princegeorgescountymd.gov/resource/wb4e-w4nf.json?$limit=100000&$$app_token=zXkKoYL09JMeHS0iVhnXpcs78') // replace this with the food safety data set
-          .then((data) => data.json()) // this is an "implicit return" - we're returning the results of the Fetch request to the next step.
-          .then((data) => { // this is an explicit return. If I want my information to go further, I'll need to use the "return" keyword before the brackets close
-            console.log(data);
-            const clearEmptyData = data.filter((f)=>f.incident_case_id);
-            const refined = clearEmptyData.map((m)=>({
-              //elements I want for the chart
-              sector: m.pgpd_sector,
-              date: m.date,
-              inc_type:m.clearance_code_inc_type
-            }));
-            console.log(refined);
-            return refined;
-      
-          })
+        fetch("/apiType", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          }
+        })
+          .then((data) => data.json()) 
           .then((data)=>{
-          return data.reduce((result, current)=>{
+            data = data.data;
+            return data.reduce((result, current)=>{
             if(!result[current.inc_type]){
               result[current.inc_type]=[];
             }
             result[current.inc_type].push(current);
             return result;
-          }, {});
-        })
-        .then((data)=>{
-          console.log(data);
-          const new_content = document.querySelector(".crimeData");
-          for (let type in data){
-            console.log(type);
-            let typeLink = '<li><a href="crimeType.html?type='+type+'">'+type+'</a></li>';
-            new_content.innerHTML += typeLink;
-          }
-        });
-          
-          
+            }, {});
+          })
+          .then((data)=>{
+            console.log(data);
+            const new_content = document.querySelector(".crimeData");
+            for (let type in data){
+              console.log(type);
+              let typeLink = '<li><a href="crimeType.html?type='+type+'">'+type+'</a></li>';
+              new_content.innerHTML += typeLink;
+            }
+          });
+            
       </script>
   </body>
 </html>
