@@ -1,4 +1,4 @@
-#Crime in Hyattsville, Maryland
+# Crime in Hyattsville, Maryland
 
 Team Members: Evan Hulse, Andy Loftus, Neel Shah, Vinay Mantha, James Nicol
 
