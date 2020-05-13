@@ -1,3 +1,4 @@
+# User Manual
 Our application provides a detailed insight to crimes that occur in the Hyattsville
 Maryland area. Currently, the University of Maryland updates its students and staff
 with crimes that occur in the area via email notifications. Our stakeholders are the 
