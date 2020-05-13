@@ -1,4 +1,4 @@
-#Developer Manual
+# Developer Manual
 
 Dependencies:
 The required dependencies include: npm, express, node-fetch
